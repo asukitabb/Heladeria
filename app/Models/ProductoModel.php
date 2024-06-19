@@ -6,44 +6,23 @@ use CodeIgniter\Model;
 
 class ProductoModel extends Model
 {
-    protected $table      = 'productos';
+    protected $table = 'productos';
     protected $primaryKey = 'id';
 
-    protected $returnType     = 'array';
-    protected $useSoftDeletes = true;
+    protected $returnType = 'array';
+    protected $allowedFields = ['nombre', 'descripcion', 'precio', 'sabor'];
 
-    protected $allowedFields = ['nombre', 'descripcion', 'precio'];
-
-    // Enable timestamps, so created_at and updated_at fields are automatically managed
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
 
-    // Validation rules
     protected $validationRules = [
-        'nombre'      => 'required|string|min_length[3]',
-        'descripcion' => 'required|string|min_length[10]',
+        'nombre'      => 'required|alpha_numeric_space|min_length[3]',
+        'descripcion' => 'required',
         'precio'      => 'required|decimal',
+        'sabor'       => 'required|alpha_space'
     ];
 
-    // Validation messages
-    protected $validationMessages = [
-        'nombre' => [
-            'required'   => 'El nombre del producto es obligatorio.',
-            'string'     => 'El nombre del producto debe ser una cadena de texto.',
-            'min_length' => 'El nombre del producto debe tener al menos 3 caracteres.',
-        ],
-        'descripcion' => [
-            'required'   => 'La descripción del producto es obligatoria.',
-            'string'     => 'La descripción del producto debe ser una cadena de texto.',
-            'min_length' => 'La descripción del producto debe tener al menos 10 caracteres.',
-        ],
-        'precio' => [
-            'required' => 'El precio del producto es obligatorio.',
-            'decimal'  => 'El precio del producto debe ser un número decimal.',
-        ],
-    ];
-
+    protected $validationMessages = [];
     protected $skipValidation = false;
 }

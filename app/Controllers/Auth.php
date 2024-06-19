@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
+use CodeIgniter\Controller;
 
-class Auth extends BaseController
+class Auth extends Controller
 {
     public function login()
     {
@@ -13,35 +14,30 @@ class Auth extends BaseController
 
     public function attemptLogin()
     {
-        $session = session();
         $model = new UsuarioModel();
         $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $password = $this->request->getPost('contrasena');
 
         $user = $model->where('username', $username)->first();
 
-        if ($user) {
-            if ($password === $user['contrasena']) {
-                $session->set([
-                    'id' => $user['id'],
-                    'username' => $user['username'],
-                    'isLoggedIn' => true
-                ]);
-                return redirect()->to('/productos');
-            } else {
-                $session->setFlashdata('error', 'Contraseña incorrecta.');
-                return redirect()->back();
-            }
-        } else {
-            $session->setFlashdata('error', 'Usuario no encontrado.');
-            return redirect()->back();
+        if ($user && $password === $user['contrasena']) { // Asegúrate de que la contraseña esté sin cifrar
+            $session = session();
+            $session->set([
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'rol' => $user['rol'],
+                'isLoggedIn' => true
+            ]);
+
+            return redirect()->to('/');
         }
+
+        return redirect()->back()->withInput()->with('error', 'Credenciales de inicio de sesión inválidas');
     }
 
     public function logout()
     {
-        $session = session();
-        $session->destroy();
+        session()->destroy();
         return redirect()->to('/login');
     }
 }

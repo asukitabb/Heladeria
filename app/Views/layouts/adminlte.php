@@ -18,7 +18,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="<?= base_url('/') ?>" class="nav-link"></a>
+                <a href="<?= base_url('/') ?>" class="nav-link">Inicio</a>
             </li>
         </ul>
 
@@ -43,6 +43,7 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <?php if (session()->get('rol') == 'admin'): ?>
                     <li class="nav-item">
                         <a href="<?= base_url('usuarios') ?>" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -54,6 +55,25 @@
                             <i class="nav-icon fas fa-box"></i>
                             <p>Productos</p>
                         </a>
+                    </li>
+                    <?php endif; ?>
+                    <li class="nav-item">
+                        <a href="<?= base_url('ventas') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>Ventas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= base_url('reportes/productosSabor') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>Reporte de Productos por Sabor</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="<?= base_url('reportes/VentasProducto') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>Reporte de Ventas por Producto</p>
+                    </a>
                     </li>
                 </ul>
             </nav>
@@ -77,9 +97,8 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <div class="float-right d-none d-sm-inline">
-            Anything you want
+           
         </div>
-        <strong>Copyright &copy; 2021 <a href="#">Company</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

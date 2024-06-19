@@ -6,6 +6,19 @@ use App\Models\ProductoModel;
 
 class Productos extends BaseController
 {
+    public function __construct()
+    {
+        // Verificar autenticación en cada método
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/login')->send();
+        }
+
+        if ($session->get('rol') != 'admin') {
+            return redirect()->to('/')->send();
+        }
+    }
+
     public function index()
     {
         $model = new ProductoModel();
@@ -25,9 +38,10 @@ class Productos extends BaseController
             'nombre'      => $this->request->getPost('nombre'),
             'descripcion' => $this->request->getPost('descripcion'),
             'precio'      => $this->request->getPost('precio'),
+            'sabor'       => $this->request->getPost('sabor'),
         ];
 
-        if (!$model->insert($data)) {
+        if ($model->insert($data) === false) {
             return redirect()->back()->withInput()->with('errors', $model->errors());
         }
 
@@ -38,6 +52,11 @@ class Productos extends BaseController
     {
         $model = new ProductoModel();
         $data['producto'] = $model->find($id);
+
+        if (empty($data['producto'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Producto no encontrado');
+        }
+
         return view('productos/edit', $data);
     }
 
@@ -48,9 +67,10 @@ class Productos extends BaseController
             'nombre'      => $this->request->getPost('nombre'),
             'descripcion' => $this->request->getPost('descripcion'),
             'precio'      => $this->request->getPost('precio'),
+            'sabor'       => $this->request->getPost('sabor'),
         ];
 
-        if (!$model->update($id, $data)) {
+        if ($model->update($id, $data) === false) {
             return redirect()->back()->withInput()->with('errors', $model->errors());
         }
 

@@ -14,7 +14,7 @@
                     <p><?= $error ?></p>
                 <?php endforeach ?>
             </div>
-        <?php endif ?>
+        <?php endif; ?>
 
         <form action="<?= base_url('productos/store') ?>" method="post">
             <div class="form-group">
@@ -27,7 +27,11 @@
             </div>
             <div class="form-group">
                 <label for="precio">Precio</label>
-                <input type="number" name="precio" class="form-control" value="<?= old('precio') ?>" required>
+                <input type="text" name="precio" class="form-control" value="<?= old('precio') ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="sabor">Sabor</label>
+                <input type="text" name="sabor" class="form-control" value="<?= old('sabor') ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>

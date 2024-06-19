@@ -39,21 +39,31 @@ $routes->get('login', 'Auth::login');
 $routes->post('auth/attemptLogin', 'Auth::attemptLogin');
 $routes->get('logout', 'Auth::logout');
 
-// Rutas para Productos (Aseguradas)
+// Rutas para Productos
 $routes->get('productos', 'Productos::index');
 $routes->get('productos/create', 'Productos::create');
 $routes->post('productos/store', 'Productos::store');
 $routes->get('productos/edit/(:segment)', 'Productos::edit/$1');
 $routes->post('productos/update/(:segment)', 'Productos::update/$1');
 $routes->get('productos/delete/(:segment)', 'Productos::delete/$1');
+$routes->get('reportes/productosSabor', 'Reportes::productosPorSabor');
+$routes->get('reportes/VentasProducto', 'Reportes::VentasPorProducto');
 
-// Rutas para Usuarios (Aseguradas)
+// Rutas para Usuarios
 $routes->get('usuarios', 'Usuarios::index');
 $routes->get('usuarios/create', 'Usuarios::create');
 $routes->post('usuarios/store', 'Usuarios::store');
 $routes->get('usuarios/edit/(:segment)', 'Usuarios::edit/$1');
 $routes->post('usuarios/update/(:segment)', 'Usuarios::update/$1');
 $routes->get('usuarios/delete/(:segment)', 'Usuarios::delete/$1');
+
+// Rutas para Ventas
+$routes->get('ventas', 'Ventas::index');
+$routes->get('ventas/create', 'Ventas::create');
+$routes->post('ventas/store', 'Ventas::store');
+$routes->get('ventas/edit/(:segment)', 'Ventas::edit/$1');
+$routes->post('ventas/update/(:segment)', 'Ventas::update/$1');
+$routes->get('ventas/delete/(:segment)', 'Ventas::delete/$1');
 
 /*
  * --------------------------------------------------------------------

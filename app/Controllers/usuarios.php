@@ -8,7 +8,6 @@ class Usuarios extends BaseController
 {
     public function __construct()
     {
-        // Verificar autenticación en cada método
         $session = session();
         if (!$session->get('isLoggedIn')) {
             return redirect()->to('/login')->send();
@@ -31,8 +30,8 @@ class Usuarios extends BaseController
     {
         $model = new UsuarioModel();
         $data = [
-            'nombre'    => $this->request->getPost('nombre'),
             'username'  => $this->request->getPost('username'),
+            'nombre'    => $this->request->getPost('nombre'),
             'contrasena'=> $this->request->getPost('contrasena'),
             'rol'       => $this->request->getPost('rol'),
         ];
@@ -60,8 +59,8 @@ class Usuarios extends BaseController
     {
         $model = new UsuarioModel();
         $data = [
-            'nombre'    => $this->request->getPost('nombre'),
             'username'  => $this->request->getPost('username'),
+            'nombre'    => $this->request->getPost('nombre'),
             'contrasena'=> $this->request->getPost('contrasena'),
             'rol'       => $this->request->getPost('rol'),
         ];

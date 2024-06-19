@@ -18,6 +18,7 @@
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
+                    <th>Sabor</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -28,6 +29,7 @@
                         <td><?= $producto['nombre'] ?></td>
                         <td><?= $producto['descripcion'] ?></td>
                         <td><?= $producto['precio'] ?></td>
+                        <td><?= $producto['sabor'] ?></td>
                         <td>
                             <a href="<?= base_url('productos/edit/' . $producto['id']) ?>" class="btn btn-warning btn-sm">Editar</a>
                             <a href="<?= base_url('productos/delete/' . $producto['id']) ?>" class="btn btn-danger btn-sm">Eliminar</a>

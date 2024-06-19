@@ -12,14 +12,15 @@ class UsuarioModel extends Model
     protected $returnType = 'array';
     protected $allowedFields = ['username', 'nombre', 'contrasena', 'rol'];
 
-    // Deshabilitar timestamps si no deseas usarlos
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
 
     protected $validationRules = [
-        'username'  => 'required|alpha_numeric_space|min_length[3]|is_unique[usuarios.username]',
-        'contrasena'=> 'required|min_length[8]',
-        'nombre'    => 'required|alpha_space',
-        'rol'       => 'required|in_list[admin,cajero]'
+        'username'   => 'required|alpha_numeric_space|min_length[3]',
+        'nombre'     => 'required|alpha_space',
+        'contrasena' => 'required',
+        'rol'        => 'required|in_list[admin,cajero]'
     ];
 
     protected $validationMessages = [];
