@@ -37,52 +37,78 @@ class Ventas extends BaseController
     public function store()
     {
         $model = new VentaModel();
+        $productoModel = new ProductoModel();
+        
+        $producto_id = $this->request->getPost('producto_id');
+        $cantidad = $this->request->getPost('cantidad');
+        
+        // Obtener el precio del producto
+        $producto = $productoModel->getPrecio($producto_id);
+        $precio = $producto['precio'];
+        
+        // Calcular el total
+        $total = $precio * $cantidad;
+    
         $data = [
             'cliente'    => $this->request->getPost('cliente'),
-            'producto_id'=> $this->request->getPost('producto_id'),
-            'cantidad'   => $this->request->getPost('cantidad'),
-            'total'      => $this->request->getPost('total'),
+            'producto_id'=> $producto_id,
+            'cantidad'   => $cantidad,
+            'total'      => $total,
             'usuario_id' => session()->get('id'),
         ];
-
+    
         if (!$model->insert($data)) {
             return redirect()->back()->withInput()->with('errors', $model->errors());
         }
-
+    
         return redirect()->to('/ventas');
     }
 
     public function edit($id)
     {
         $model = new VentaModel();
-        $data['venta'] = $model->find($id);
+    $data['venta'] = $model->find($id);
 
-        if (empty($data['venta'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Venta no encontrada');
-        }
+    if (empty($data['venta'])) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException('Venta no encontrada');
+    }
 
-        $productoModel = new ProductoModel();
-        $data['productos'] = $productoModel->findAll();
+    $productoModel = new ProductoModel();
+    $usuarioModel = new UsuarioModel();
+    $data['productos'] = $productoModel->findAll();
+    $data['usuarios'] = $usuarioModel->findAll();
 
-        return view('ventas/edit', $data);
+    return view('ventas/edit', $data);
     }
 
     public function update($id)
     {
         $model = new VentaModel();
-        $data = [
-            'cliente'    => $this->request->getPost('cliente'),
-            'producto_id'=> $this->request->getPost('producto_id'),
-            'cantidad'   => $this->request->getPost('cantidad'),
-            'total'      => $this->request->getPost('total'),
-            'usuario_id' => session()->get('id'),
-        ];
+    $productoModel = new ProductoModel();
+    
+    $producto_id = $this->request->getPost('producto_id');
+    $cantidad = $this->request->getPost('cantidad');
+    
+    // Obtener el precio del producto
+    $producto = $productoModel->getPrecio($producto_id);
+    $precio = $producto['precio'];
+    
+    // Calcular el total
+    $total = $precio * $cantidad;
 
-        if (!$model->update($id, $data)) {
-            return redirect()->back()->withInput()->with('errors', $model->errors());
-        }
+    $data = [
+        'cliente'    => $this->request->getPost('cliente'),
+        'producto_id'=> $producto_id,
+        'cantidad'   => $cantidad,
+        'total'      => $total,
+        'usuario_id' => session()->get('id'),
+    ];
 
-        return redirect()->to('/ventas');
+    if (!$model->update($id, $data)) {
+        return redirect()->back()->withInput()->with('errors', $model->errors());
+    }
+
+    return redirect()->to('/ventas');
     }
 
     public function delete($id)

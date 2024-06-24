@@ -20,7 +20,7 @@ class VentaModel extends Model
         'cliente'    => 'required|alpha_space|min_length[3]',
         'producto_id'=> 'required|integer',
         'cantidad'   => 'required|integer',
-        'total'      => 'required|decimal',
+        'total'      => 'required',
         'usuario_id' => 'required|integer'
     ];
 

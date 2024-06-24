@@ -16,30 +16,49 @@
             </div>
         <?php endif; ?>
 
-        <form action="<?= base_url('ventas/store') ?>" method="post">
+        <form action="<?= base_url('ventas/store') ?>" method="post" id="ventaForm">
             <div class="form-group">
                 <label for="cliente">Nombre del Cliente</label>
                 <input type="text" name="cliente" class="form-control" placeholder="Ingrese el nombre del cliente" required>
             </div>
             <div class="form-group">
                 <label for="producto_id">Producto</label>
-                <select name="producto_id" class="form-control" required>
+                <select name="producto_id" class="form-control" id="producto_id" required>
                     <option value="">Seleccione un producto</option>
                     <?php foreach ($productos as $producto): ?>
-                        <option value="<?= $producto['id'] ?>"><?= $producto['nombre'] ?></option>
+                        <option value="<?= $producto['id'] ?>" data-precio="<?= $producto['precio'] ?>"><?= $producto['nombre'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="cantidad">Cantidad</label>
-                <input type="number" name="cantidad" class="form-control" required>
+                <input type="number" name="cantidad" class="form-control" id="cantidad" required>
             </div>
             <div class="form-group">
                 <label for="total">Total</label>
-                <input type="text" name="total" class="form-control" required>
+                <input type="text" name="total" class="form-control" id="total" readonly required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const productoSelect = document.getElementById('producto_id');
+    const cantidadInput = document.getElementById('cantidad');
+    const totalInput = document.getElementById('total');
+
+    function calcularTotal() {
+        const precio = parseFloat(productoSelect.selectedOptions[0].getAttribute('data-precio')) || 0;
+        const cantidad = parseFloat(cantidadInput.value) || 0;
+        const total = precio * cantidad;
+        totalInput.value = total.toFixed(2);
+    }
+
+    productoSelect.addEventListener('change', calcularTotal);
+    cantidadInput.addEventListener('input', calcularTotal);
+});
+</script>
+
 <?= $this->endSection() ?>

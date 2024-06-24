@@ -29,6 +29,10 @@
                 <label for="precio">Precio</label>
                 <input type="number" name="precio" class="form-control" value="<?= old('precio', $producto['precio']) ?>" required>
             </div>
+            <div class="form-group">
+                <label for="sabor">Sabor</label>
+                <input type="text" name="sabor" class="form-control" value="<?= old('sabor', $producto['sabor'])?>" required>
+            </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>

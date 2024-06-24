@@ -83,4 +83,5 @@ class Productos extends BaseController
         $model->delete($id);
         return redirect()->to('/productos');
     }
+    
 }

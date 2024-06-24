@@ -19,10 +19,15 @@ class ProductoModel extends Model
     protected $validationRules = [
         'nombre'      => 'required|alpha_numeric_space|min_length[3]',
         'descripcion' => 'required',
-        'precio'      => 'required|decimal',
+        'precio'      => 'required',
         'sabor'       => 'required|alpha_space'
     ];
 
     protected $validationMessages = [];
     protected $skipValidation = false;
+
+    public function getPrecio($id)
+    {
+        return $this->where('id', $id)->select('precio')->first();
+    }
 }
